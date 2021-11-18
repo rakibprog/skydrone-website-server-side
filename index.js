@@ -28,7 +28,7 @@ async function run() {
         const orderCollection = database.collection('OrderNow');
         const reviewCollection = database.collection('review');
 
-        //product post Api
+        // Post API
         app.post("/products", async(req, res) => {
             const product = req.body;
             const result = await watchCollection.insertOne(product);
@@ -36,19 +36,19 @@ async function run() {
         })
 
 
-        //product All loop API
+        //Post API
         app.get('/products', async(req, res) => {
             const products = await watchCollection.find({}).toArray();
             res.json(products);
         });
 
-        //product All loop API but limit
+        
         app.get('/products/limit', async(req, res) => {
             const products = await watchCollection.find({}).limit(6).toArray();
             res.json(products);
         });
 
-        // delete main product Api
+        // delete  APi
         app.delete('/products/:id', async(req, res) => {
             const id = req.params.id;
             const query = { _id: ObjectId(id) }
@@ -65,7 +65,7 @@ async function run() {
         });
 
 
-        // Order on product API
+        // Order Get API
         app.post("/order", async(req, res) => {
             const product = req.body;
             const result = await orderCollection.insertOne(product);
@@ -73,7 +73,7 @@ async function run() {
         });
 
 
-        // user Order Show to display product API
+        
         app.get("/order/:email", async(req, res) => {
             const user = req.params;
             const query = { email: user.email };
@@ -81,13 +81,13 @@ async function run() {
             res.json(result);
         });
 
-        // All Order Show to display product API
+        
         app.get("/order", async(req, res) => {
             const result = await orderCollection.find({}).toArray();
             res.json(result);
         });
 
-        // delete Admin Order List Api
+        
         app.delete('/order/:id', async(req, res) => {
             const id = req.params.id;
             const query = { _id: ObjectId(id) }
@@ -95,7 +95,7 @@ async function run() {
             res.json(result);
         });
 
-        //save user api
+   
         app.post("/user", async(req, res) => {
             const user = req.body;
             const result = await userCollection.insertOne(user);
@@ -108,7 +108,7 @@ async function run() {
             res.json(result);
         });
 
-        //user role update admin API
+       
         app.put("/user/admin", async(req, res) => {
             const user = req.body;
             console.log(user);
@@ -118,7 +118,7 @@ async function run() {
             res.json(result);
         })
 
-        // get the user admin role API
+      
         app.get('/user/:email', async(req, res) => {
             const email = req.params.email;
             const query = { email: email };
@@ -130,14 +130,14 @@ async function run() {
             res.json({ admin: isAdmin });
         })
 
-        //review post api
+        
         app.post('/review', async(req, res) => {
             const review = req.body;
             const result = await reviewCollection.insertOne(review);
             res.json(result);
         });
 
-        //review get api
+        
         app.get('/review', async(req, res) => {
             const review = await reviewCollection.find({}).toArray();
             res.json(review);
